@@ -9,6 +9,9 @@ namespace UrbanAirSharp.Dto
 {
 	public class Audience
 	{
+        [JsonProperty("named_user_id")]
+        public string NamedUserId { get; private set; }
+
 		[JsonProperty("apid")]
 		public string AndroidDeviceId { get; private set; }
 

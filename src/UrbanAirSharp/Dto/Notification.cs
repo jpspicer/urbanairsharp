@@ -23,5 +23,8 @@ namespace UrbanAirSharp.Dto
 
 		[JsonProperty("blackberry")]
 		public BlackberryAlert BlackberryAlert { get; set; }
+
+        [JsonProperty("actions")]
+        public Actions Actions { get; set; }
 	}
 }

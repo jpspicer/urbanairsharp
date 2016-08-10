@@ -71,9 +71,6 @@ namespace UrbanAirSharp.Dto
 		public Options Options { get; set; }
 
 		//TODO: not implemented yet
-		[JsonProperty("actions")]
-		public Actions Actions { get; private set; }
-
 		//TODO: not implemented yet
 		[JsonProperty("message")]
 		public RichMessage RichMessage { get; private set; }

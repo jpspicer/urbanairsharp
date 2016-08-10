@@ -97,7 +97,18 @@ namespace TestApp
 			Console.Write(response.HttpResponseCode + " - ");
 			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
 			Console.WriteLine();
+
+            var customActions = new Actions();
+            customActions.OpenAction = new OpenAction(OpenActionType.url, "https://example.com");
+
+            Console.WriteLine("PUSH Custom Action");
+            response = _urbanAirSharpGateway.Push("Custom Action Alert", null, null, null, null, customActions);
+
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 		}
+
 
 		private static void TestRegisterDevice()
 	    {

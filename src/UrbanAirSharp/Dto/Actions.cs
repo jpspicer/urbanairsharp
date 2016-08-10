@@ -13,10 +13,16 @@ namespace UrbanAirSharp.Dto
 		[JsonProperty("open")]
 		public OpenAction OpenAction { get; set; }
 
+        [JsonProperty("share")]
+        public string ShareAction { get; set; }
+
 		[JsonProperty("add_tag")]
 		public IList<string> AddTags { get; set; }
 
 		[JsonProperty("remove_tag")]
 		public IList<string> RemoveTags { get; set; }
+
+        //todo: implement app_defined
+        //[JsonProperty("app_defined")]
 	}
 }

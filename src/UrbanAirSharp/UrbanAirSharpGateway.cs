@@ -73,12 +73,23 @@ namespace UrbanAirSharp
         /// <param name="deviceAlerts">per device alert messages and extras</param>
         /// <param name="customAudience">a more specific way to choose the audience for the
         /// push. If this is set, deviceId is ignored</param>
+        /// <param name="customActions">used to specify actions that should occure when responding to the push</param>
         /// <returns>
         /// Service Response
         /// </returns>
-        public PushResponse Push(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+        public PushResponse Push(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null, Actions customActions = null)
         {
-            return SendRequest(new PushRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience)));
+            return SendRequest(new PushRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience, customActions)));
+        }
+
+        /// <summary>
+        /// Send a push request using a precreated push object
+        /// </summary>
+        /// <param name="push"></param>
+        /// <returns></returns>
+        public PushResponse Push(Push push)
+        {
+            return SendRequest(new PushRequest(push));
         }
 
         /// <summary>
@@ -89,12 +100,23 @@ namespace UrbanAirSharp
         /// <param name="deviceId">use null for broadcast or deviceTypes must contain 1 element that distinguishes this deviceId</param>
         /// <param name="deviceAlerts">per device alert messages and extras</param>
         /// <param name="customAudience">a more specific way to choose the audience for the push. If this is set, deviceId is ignored</param>
+        /// <param name="customActions">used to specify actions that should occure when responding to the push</param>
         /// <returns>Service Response</returns>
         public PushResponse Validate(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null,
-			IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+			IList<BaseAlert> deviceAlerts = null, Audience customAudience = null, Actions customAction = null)
 		{
-			return SendRequest(new PushValidateRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience)));
+			return SendRequest(new PushValidateRequest(CreatePush(alert, deviceTypes, deviceId, deviceAlerts, customAudience, customAction)));
 		}
+
+        /// <summary>
+        /// validate a push object
+        /// </summary>
+        /// <param name="push"></param>
+        /// <returns></returns>
+        public PushResponse Validate(Push push)
+        {
+            return SendRequest(new PushValidateRequest(push));
+        }
 
         /// <summary>
         /// Create a Schedule
@@ -218,13 +240,14 @@ namespace UrbanAirSharp
 	    /// <param name="deviceId">Singular Device ID</param>
 	    /// <param name="deviceAlerts">Device/Platform Specific Alerts</param>
 	    /// <param name="customAudience">Audience</param>
+        /// <param name="customActions">used to specify actions that should occure when responding to the push</param>
 	    /// <returns>A push object capable of representing the options provided.</returns>
 	    /// TODO: Move to DTOs?
 	    /// <exception cref="InvalidOperationException">when deviceId is not null, deviceTypes must contain 1 element which identifies the deviceId type</exception>
 	    /// <exception cref="ArgumentNullException">Linq source or predicate is null.</exception>
 	    /// <exception cref="ArgumentOutOfRangeException">index is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</exception>
 	    /// <exception cref="NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1" /> is read-only.</exception>
-	    public static Push CreatePush(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null)
+	    public static Push CreatePush(string alert, IList<DeviceType> deviceTypes = null, string deviceId = null, IList<BaseAlert> deviceAlerts = null, Audience customAudience = null, Actions customActions = null)
 		{
 			var push = new Push()
 			{
@@ -274,6 +297,11 @@ namespace UrbanAirSharp
 					}
 				}
 			}
+
+            if (customActions != null)
+            {
+                push.Notification.Actions = customActions;
+            }
 
 			if (deviceAlerts == null || deviceAlerts.Count <= 0)
 			{
