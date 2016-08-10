@@ -9,7 +9,7 @@ namespace UrbanAirSharp.Dto
 {
 	public class Audience
 	{
-        [JsonProperty("named_user_id")]
+        [JsonProperty("named_user")]
         public string NamedUserId { get; private set; }
 
 		[JsonProperty("apid")]
@@ -77,6 +77,9 @@ namespace UrbanAirSharp.Dto
 				case AudienceType.Tag:
 					Tag = value;
 					break;
+                case AudienceType.NamedUser:
+                    NamedUserId = value;
+                    break;
 			}
 		}
 

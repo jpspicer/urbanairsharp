@@ -107,6 +107,17 @@ namespace TestApp
             Console.Write(response.HttpResponseCode + " - ");
             Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
             Console.WriteLine();
+
+            var namedUserAudince = new Audience(AudienceType.NamedUser, "TestUser");
+
+            Console.WriteLine("PUSH to NamedUser");
+            //named user is not supported on blackberry
+            //does not work with mpns or wns error=The feature 'static_list' is not supported
+            response = _urbanAirSharpGateway.Push("Push to Named User Alert", new List<DeviceType> { DeviceType.Android, DeviceType.Ios}, null, null, namedUserAudince);
+
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 		}
 
 
