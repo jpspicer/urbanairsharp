@@ -184,7 +184,7 @@ namespace TestApp
 
             Console.WriteLine("CREATE GROUP TAG:");
             var tags = new TagGroupAddRemoveList();
-            tags.AddTags.Add("product", new List<string>{"tag1"});
+            tags.Add.Add("crm", new List<string>{"tag1"});
             tags.Audience = new Audience(AudienceType.NamedUserId, "user1");
 
             response = _urbanAirSharpGateway.UpdateTagsForNamedUser(tags);
