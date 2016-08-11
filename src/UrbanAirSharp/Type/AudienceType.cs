@@ -2,16 +2,18 @@
 
 namespace UrbanAirSharp.Type
 {
-	public enum AudienceType
+    public enum AudienceType
     {
-		Android,
-		Ios,
-		Windows,
-		WindowsPhone,
-		Blackberry,
-		Segment,
-		Alias,
-		Tag,
-        NamedUser
-	}
+        Android,
+        Ios,
+        Windows,
+        WindowsPhone,
+        Blackberry,
+        Segment,
+        Alias,
+        Tag,
+        NamedUser,
+        TagGroup,
+        NamedUserId
+    }
 }

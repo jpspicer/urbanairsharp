@@ -232,6 +232,15 @@ namespace UrbanAirSharp
 			return SendRequest(new TagListRequest());
 		}
 
+        /// <summary>
+        /// Adds, Removes, Sets Tags for a named user
+        /// </summary>
+        /// <returns></returns>
+        public BaseResponse UpdateTagsForNamedUser(TagGroupAddRemoveList tags)
+        {
+            return SendRequest(new NamedUserTagRequest(tags));
+        }
+
 	    /// <summary>
 	    /// Create a Push Object
 	    /// </summary>

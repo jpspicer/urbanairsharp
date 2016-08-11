@@ -69,6 +69,7 @@
     <Compile Include="Dto\ScheduleInfo.cs" />
     <Compile Include="Dto\Schedule.cs" />
     <Compile Include="Dto\Tag.cs" />
+    <Compile Include="Dto\TagGroupAddRemoveList.cs" />
     <Compile Include="Dto\WindowsAlert.cs" />
     <Compile Include="Dto\WindowsPhoneAlert.cs" />
     <Compile Include="Request\Base\DeleteRequest.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Request\Base\PostRequest.cs" />
     <Compile Include="Request\Base\PutRequest.cs" />
     <Compile Include="Request\DeviceTokenRequest.cs" />
+    <Compile Include="Request\NamedUserRequest.cs" />
     <Compile Include="Request\TagDeleteRequest.cs" />
     <Compile Include="Request\TagCreateRequest.cs" />
     <Compile Include="Request\TagListRequest.cs" />
@@ -99,6 +101,7 @@
     <Compile Include="Request\PushValidateRequest.cs" />
     <Compile Include="Response\BaseResponse.cs" />
     <Compile Include="Request\PushRequest.cs" />
+    <Compile Include="Type\OpenActionType.cs" />
     <Compile Include="UrbanAirSharpGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,10 +1,10 @@
 ﻿// Copyright (c) 2014-2015 Jeff Gosling (jeffery.gosling@gmail.com)
 using System;
 using Newtonsoft.Json;
+using UrbanAirSharp.Type;
 
 namespace UrbanAirSharp.Dto
 {
-    public enum OpenActionType {url,deep,landing};
 	public class OpenAction
 	{
 		//either url, deep_link or landing_page
