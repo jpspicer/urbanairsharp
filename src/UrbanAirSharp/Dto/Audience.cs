@@ -40,7 +40,7 @@ namespace UrbanAirSharp.Dto
 		public string Tag { get; private set; }
 
         [JsonProperty("group")]
-        public string TagGroup { get; set; }
+        public string TagGroup { get; private set; }
 
 		[JsonProperty("OR")]
 		public IList<Audience> Or { get; private set; }
@@ -57,7 +57,11 @@ namespace UrbanAirSharp.Dto
 
 		public Audience(AudienceType type, string value)
 		{
-			switch (type)
+            SetAudienceField(type, value);
+		}
+
+        public void SetAudienceField(AudienceType type, string value){
+            			switch (type)
 			{
 				case AudienceType.Android:
 					AndroidDeviceId = value;
@@ -90,7 +94,7 @@ namespace UrbanAirSharp.Dto
                     NamedUserId = value.Split(',');
                     break;
 			}
-		}
+        }
 
 		public Audience OrAudience(IList<Audience> audiences)
 		{

@@ -47,26 +47,26 @@ namespace TestApp
 			Console.WriteLine("================ TESTING PUSH ================");
 			Console.WriteLine();
 
-			Console.WriteLine("PUSH Broadcast Alert");
-			var response = _urbanAirSharpGateway.Push("Broadcast Alert");
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("PUSH Broadcast Alert");
+            var response = _urbanAirSharpGateway.Push("Broadcast Alert");
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			Console.WriteLine("PUSH Broadcast Alert to Androids");
-			response = _urbanAirSharpGateway.Push("Broadcast Alert to Androids", new List<DeviceType> { DeviceType.Android });
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("PUSH Broadcast Alert to Androids");
+            response = _urbanAirSharpGateway.Push("Broadcast Alert to Androids", new List<DeviceType> { DeviceType.Android });
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			Console.WriteLine("PUSH Targeted Alert to device");
-			response = _urbanAirSharpGateway.Push("Targeted Alert to device", new List<DeviceType> { DeviceType.Android }, TestDeviceGuid);
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("PUSH Targeted Alert to device");
+            response = _urbanAirSharpGateway.Push("Targeted Alert to device", new List<DeviceType> { DeviceType.Android }, TestDeviceGuid);
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			Console.WriteLine("PUSH Custom Alert per device type");
-			response = _urbanAirSharpGateway.Push("Custom Alert per device type", null, null, new List<BaseAlert>
+            Console.WriteLine("PUSH Custom Alert per device type");
+            response = _urbanAirSharpGateway.Push("Custom Alert per device type", null, null, new List<BaseAlert>
             {
                 new AndroidAlert
                 {
@@ -76,27 +76,27 @@ namespace TestApp
                     GcmTimeToLive = 5
                 }
             });
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			//these are just examples of tags
-			var rugbyFanAudience = new Audience(AudienceType.Tag, "Rugby Fan");
-			var footballFanAudience = new Audience(AudienceType.Tag, "Football Fan");
-			var notFootballFanAudience = new Audience().NotAudience(footballFanAudience);
-			var newZealandAudience = new Audience(AudienceType.Alias, "NZ");
-			var englishAudience = new Audience(AudienceType.Tag, "language_en");
+            //these are just examples of tags
+            var rugbyFanAudience = new Audience(AudienceType.Tag, "Rugby Fan");
+            var footballFanAudience = new Audience(AudienceType.Tag, "Football Fan");
+            var notFootballFanAudience = new Audience().NotAudience(footballFanAudience);
+            var newZealandAudience = new Audience(AudienceType.Alias, "NZ");
+            var englishAudience = new Audience(AudienceType.Tag, "language_en");
 
-			var fansAudience = new Audience().OrAudience(new List<Audience> { rugbyFanAudience, notFootballFanAudience });
+            var fansAudience = new Audience().OrAudience(new List<Audience> { rugbyFanAudience, notFootballFanAudience });
 
-			var customAudience = new Audience().AndAudience(new List<Audience> { fansAudience, newZealandAudience, englishAudience });
+            var customAudience = new Audience().AndAudience(new List<Audience> { fansAudience, newZealandAudience, englishAudience });
 
-			Console.WriteLine("PUSH to custom Audience");
-			response = _urbanAirSharpGateway.Push("English speaking New Zealand Rugby fans", null, null, null, customAudience);
+            Console.WriteLine("PUSH to custom Audience");
+            response = _urbanAirSharpGateway.Push("English speaking New Zealand Rugby fans", null, null, null, customAudience);
 
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
             var customActions = new Actions();
             customActions.OpenAction = new OpenAction(OpenActionType.url, "https://example.com");
@@ -108,12 +108,23 @@ namespace TestApp
             Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
             Console.WriteLine();
 
-            var namedUserAudince = new Audience(AudienceType.NamedUser, "TestUser");
+            var namedUserAudience = new Audience(AudienceType.NamedUser, "user1");
 
-            Console.WriteLine("PUSH to NamedUser");
+            Console.WriteLine("PUSH TO NAMED USER");
             //named user is not supported on blackberry
-            //does not work with mpns or wns error=The feature 'static_list' is not supported
-            response = _urbanAirSharpGateway.Push("Push to Named User Alert", new List<DeviceType> { DeviceType.Android, DeviceType.Ios}, null, null, namedUserAudince);
+            //does not work with mpns or wns 'error=The feature 'static_list' is not supported' this doesn't send a static_list so not sure why it doesn't work
+            response = _urbanAirSharpGateway.Push("Push to Named User Alert", new List<DeviceType> { DeviceType.Android, DeviceType.Ios }, null, null, namedUserAudience);
+
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
+
+
+            var Audience = new Audience(AudienceType.Tag, "tag1");
+            Audience.SetAudienceField(AudienceType.TagGroup, "crm");
+
+            Console.WriteLine("PUSH TO NAMED USER WITH GROUP TAG");
+             response = _urbanAirSharpGateway.Push("Push to tag in a group", null, null, null, Audience);
 
             Console.Write(response.HttpResponseCode + " - ");
             Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
@@ -144,32 +155,42 @@ namespace TestApp
 
 			const string testTag = "some_tag";
 
-			var tag = new Tag
-			{
-				TagName = testTag,
-				AndroidChannels = new AddRemoveList
-				{
-					Add = new[] { "TEST_ANDROID_CHANNEL" }
-				}
-			};
+            var tag = new Tag
+            {
+                TagName = testTag,
+                AndroidChannels = new AddRemoveList
+                {
+                    Add = new[] { "TEST_ANDROID_CHANNEL" }
+                }
+            };
 
-			Console.WriteLine("CREATE TAG:");
-			var response = _urbanAirSharpGateway.CreateTag(tag);
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("CREATE TAG:");
+            var response = _urbanAirSharpGateway.CreateTag(tag);
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			Console.WriteLine("LIST TAGS:");
-			var listResponse = _urbanAirSharpGateway.ListTags();
-			Console.Write(listResponse.HttpResponseCode + " - ");
-			Console.WriteLine(listResponse.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("LIST TAGS:");
+            var listResponse = _urbanAirSharpGateway.ListTags();
+            Console.Write(listResponse.HttpResponseCode + " - ");
+            Console.WriteLine(listResponse.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 
-			Console.WriteLine("DELETE TAG:");
-			response = _urbanAirSharpGateway.DeleteTag(testTag);
-			Console.Write(response.HttpResponseCode + " - ");
-			Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
-			Console.WriteLine();
+            Console.WriteLine("DELETE TAG:");
+            response = _urbanAirSharpGateway.DeleteTag(testTag);
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
+
+            Console.WriteLine("CREATE GROUP TAG:");
+            var tags = new TagGroupAddRemoveList();
+            tags.AddTags.Add("product", new List<string>{"tag1"});
+            tags.Audience = new Audience(AudienceType.NamedUserId, "user1");
+
+            response = _urbanAirSharpGateway.UpdateTagsForNamedUser(tags);
+            Console.Write(response.HttpResponseCode + " - ");
+            Console.WriteLine(response.Ok ? "SUCCESS" : "FAILED");
+            Console.WriteLine();
 		}
 
 		private static void TestSchedules()
